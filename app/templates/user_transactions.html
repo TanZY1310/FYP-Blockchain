@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+{% if current_user.role == "Distributor" %}
+<div class="pt-3 pl-3">
+    <div class="">
+      <tr>
+          
+      <form class="form-horizontal top-form" method="POST" action="{{ url_for('send_to_retailer') }}">
+        <pre>Select Retailer ID in the dropdown list below to send the batch to</pre>
+          <td><input type="number" id="batch_id" name="batch_id" placeholder="Batch ID"></td>
+          <select name="recipient_id" id="recipient_id"> <!--creating a dropdown menu for selecting recipient id based on existing ids-->
+            {% for user in users %} 
+              <option value="{{ user.id }}">{{ user.id }}</option>
+            {% endfor %}
+          </select>
+          <td><input type="text" id="statusTransaction" name="statusTransaction" placeholder="Status"></td>
+          <td><input class="btn btn-primary" role="button" type="submit" value="Send Batch To Retailer"></td>
+      </form>
+      </tr>
+    </div>
+</div>
+{% endif %}
+    <hr>
+
+    <br>
+    <table id="table" class="table table-hover table-bordered">
+    <thead  class="thead-light">
+        <tr>
+        <th class="" scope="col">Batch ID</th>
+        <th class="" scope="col">Sender ID</th>
+        <th class="" scope="col">Recipient ID</th>
+        <th class="" scope="col">Quantity</th>
+        <th class="" scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        {% for transaction in transactions %}
+            {% if current_user.id == transaction.sender_id or current_user.id == transaction.recipient_id  %}
+                <form class="form-horizontal">
+                    <tr>
+                    <td>{{ transaction.batch_id }}</td>
+                    <td>{{ transaction.sender_id }}</td>
+                    <td>{{ transaction.recipient_id }}</td>
+                    <td>{{ transaction.quantity }}</td>
+                    <td>{{ transaction.status }}</td>
+                    </tr>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

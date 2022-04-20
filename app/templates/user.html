@@ -1,0 +1,59 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="p-4 mt-5">
+    <div clas="container">
+
+      <div class="card">
+        <div class="card-header">
+          Your Profile
+        </div>
+        <div class="card-body">
+          <h1 class="card-title" style="text-transform:capitalize; font-weight: bold;">{{ user.user_name }}</h1>
+          <h6 class="card-subtitle mb-2 text-muted">ID: {{ user.id }}</h6>
+          <br/>
+          <div class="card-text">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <div class="card">
+                  <div class="card-header">
+                    User Details
+                  </div>
+                  <div class="card-body">
+                    <p id="email"> <span style="font-weight: bold">Email: </span>{{ user.email }} </p>
+                    <p><span style="font-weight: bold">Role: </span>{{ user.role }} </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card">
+                  <div class="card-header">
+                    Address
+                  </div>
+                  <div class="card-body">
+                    <p id="street"> <span style="font-weight: bold">Street: </span>{{ address.street }} </p>
+                    <p id="city"><span style="font-weight: bold">City: </span>{{ address.city }}</p>
+                    <p id="state"><span style="font-weight: bold">State: </span>{{ address.state }}</p>
+                    <p id="zip_code"><span style="font-weight: bold">ZIP Code: </span>{{ address.zip_code }} </p>
+                    <p id="country"><span style="font-weight: bold">Country: </span>{{ address.country }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if user.id == current_user.id %}
+            <button class="btn btn-info" onclick="editUser()">Edit</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    function editUser(){
+      console.log("Editing")
+    }
+  </script>
+
+{% endblock %}

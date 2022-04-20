@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+        <br>
+        <a href="{{node_address}}/mine" target="_blank"><button>Mine Transactions into Block</button></a>
+        <br>
+        <a href="{{node_address}}/chain" target="_blank"><button>View Chain</button></a>
+        <br>
+        <a href="{{ url_for('store_mongo') }}" target="_blank"><button>Store Blockchain into Mongo</button></a>
+        <br>
+    {% endif %}    
+{% endblock %}

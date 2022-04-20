@@ -1,0 +1,78 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pt-3 float-right ">
+  <div class="container">
+    <tr>
+    <form class="form-horizontal top-form" method="POST" action="{{ url_for('new_product') }}">
+        <td><input type="string" id="productNameInput" name="product_name" placeholder="Product Name"></td>
+        <td><input class="btn btn-primary" role="button" type="submit" value="Add New Product"></td>
+    </form>
+  </tr>
+  </div>
+</div>
+
+<div class="p-3">
+  <table class="table table-bordered table-hover">
+    <thead  class="thead-light">
+      <tr>
+        <th class="" scope="col">#</th>
+        <th class="" scope="col">Product Name</th>
+        <th class="" scope="col">Date Created</th>
+        <th class="" scope="col">Quantity</th>
+        <th class="" scope="col"></th>
+        <th class="" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <form class="form-horizontal" method="POST" action="{{ url_for('new_batch') }}">
+          <tr>
+            <td id="{{ product.product_id }}">{{ product.product_id }}</td>
+            <td>{{ product.product_name }}</td>
+            <input type="hidden" id="product_id" name="product_id" value="{{ product.product_id }}">
+            <td><input type="date" min="0" id="date_created" name="date_created" value="2020-01-01"></td>
+            <td><input type="number" id="quantity" name="quantity"></td>
+            <td><input class="btn btn-primary" role="button" type="submit" value="Add New Batch"></td>
+            <td><a href="/delete_product/{{ product.product_id }}" class="btn btn-danger">Delete</a></td>
+          </tr>
+        </form>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+    <style>
+      .post_box {
+          background: #fff;
+          padding: 20px 20px 20px 20px;
+          margin-top: 10px;
+          border-top: 1px solid #f0f0f0;
+          border-radius: 5px;
+      }
+      .prod_data {
+          float: left;
+          text-align:left;
+          width:25%;
+      }
+      .send_data {
+          float: left;
+          text-align:center;
+          width:25%;
+      }
+      .time_data {
+          float: left;
+          text-align:right;
+          width:25%;
+      }
+      .status_data {
+          float: left;
+          text-align:right;
+          width:25%;
+      }
+    </style>
+  </div>
+
+{% endblock %}

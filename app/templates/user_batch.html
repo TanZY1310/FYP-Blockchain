@@ -1,0 +1,83 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pt-3 pl-3">
+  <div class="">
+    <tr>
+    <form class="form-horizontal top-form" method="POST" action="{{ url_for('send_batch') }}">
+      <pre>Select Distributor ID in the dropdown list below to send the batch to</pre>
+        <td><input type="number" id="batch_id" name="batch_id" placeholder="Batch ID"></td>   
+          <select name="recipient_id" id="recipient_id"> <!--creating a dropdown menu for selecting recipient id based on existing ids-->
+            {% for user in users %} 
+              <option value="{{ user.id }}">{{ user.id }}</option>
+            {% endfor %}
+          </select>
+        <td><input type="text" id="status" name="statusTransaction" placeholder="Transaction Status"></td>
+        <td><input class="btn btn-primary" role="button" type="submit" value="Send Batch To Distributor"></td>
+    </form>
+    </tr>
+  </div>
+</div>
+<hr>
+
+<div class="p-3">
+  <table class="table table-bordered table-hover">
+    <thead  class="thead-light">
+      <tr>
+        <th class="" scope="col">Batch ID</th>
+        <th class="" scope="col">Product ID</th>
+        <th class="" scope="col">Product Quantity</th>
+        <th class="" scope="col">Date of Product Created</th>
+        <th class="" scope="col"></th>
+        <th class="" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for batch in batches %}
+          <tr>
+            <td id="{{ batch.batch_id }}">{{ batch.batch_id }}</td>
+            <td>{{ batch.product_id }}</td>
+            <td>{{ batch.quantity }}</td>
+            <td>{{ batch.date_created }}</td>
+            <input type="hidden" id="batch_id" name="batch_id" value="{{ batch.batch_id }}">
+            <td><a href="/delete_batch/{{ batch.batch_id }}" class="btn btn-danger">Delete</a></td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+    <style>
+      .post_box {
+          background: #fff;
+          padding: 20px 20px 20px 20px;
+          margin-top: 10px;
+          border-top: 1px solid #f0f0f0;
+          border-radius: 5px;
+      }
+      .prod_data {
+          float: left;
+          text-align:left;
+          width:25%;
+      }
+      .send_data {
+          float: left;
+          text-align:center;
+          width:25%;
+      }
+      .time_data {
+          float: left;
+          text-align:right;
+          width:25%;
+      }
+      .status_data {
+          float: left;
+          text-align:right;
+          width:25%;
+      }
+    </style>
+  </div>
+
+{% endblock %}
